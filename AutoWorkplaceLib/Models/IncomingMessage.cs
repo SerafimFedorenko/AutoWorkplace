@@ -9,7 +9,7 @@ namespace AutoWorkplaceLib.Models
         public IncomingMessage()
         {
         }
-        [Required]
+        //[Required]
         public DateTime Date { get;set; }
         [Required]
         [MaxLength(25)]
@@ -23,13 +23,18 @@ namespace AutoWorkplaceLib.Models
         public int SourceId { get; set; }
         public Source? Source { get; set; }
 
-        public IncomingMessage(DateTime date, string sender, string recipient, string adressee, Source? source)
+        public IncomingMessage(DateTime date, string sender, string recipient, string adressee, int sourceId)
         {
             Date = date;
             Sender = sender;
             Recipient = recipient;
-            Source = source;
+            SourceId = sourceId;
             Adressee = adressee;
+        }
+
+        public override string? ToString()
+        {
+            return Date.ToString() + ", отправил:" + Sender + ", получил:" + Recipient;
         }
     }
 }

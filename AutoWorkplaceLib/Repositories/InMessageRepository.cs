@@ -16,8 +16,8 @@ namespace AutoWorkplaceLib.Repositories
         {
 
         }
-        public override IQueryable<IncomingMessage> ItemsForDetails => base.ItemsForDetails.Include(msg => msg.Sender);
-        public override IQueryable<IncomingMessage> AllItems => base.AllItems.Include(msg => msg.Sender);
+        public override IQueryable<IncomingMessage> ItemsForDetails => base.ItemsForDetails.Include(msg => msg.Source);
+        public override IQueryable<IncomingMessage> AllItems => base.AllItems.Include(msg => msg.Source);
 
     }
 }

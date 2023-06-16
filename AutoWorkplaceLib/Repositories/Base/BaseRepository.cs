@@ -2,6 +2,7 @@
 using AutoWorkplaceLib.Models.Base;
 using AutoWorkplaceLib.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Persistence.Repositories.Base;
 public class BaseRepository<T> : IRepository<T> where T : BaseEntity, new()

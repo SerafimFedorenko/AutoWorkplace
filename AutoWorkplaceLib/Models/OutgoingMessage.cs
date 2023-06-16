@@ -11,7 +11,7 @@ namespace AutoWorkplaceLib.Models
     {
         [Required]
         public string Number { get; set; } = string.Empty;
-        [Required]
+        //[Required]
         public DateTime Date { get; set; }
         [Required]
         [MaxLength(25)]
@@ -24,18 +24,22 @@ namespace AutoWorkplaceLib.Models
         [ForeignKey("Source")]
         public int SourceId { get; set; }
         public Source? Source { get; set; }
-        public OutgoingMessage(DateTime date, string number, string sender, string recipient, string adressee, Source? source)
+        public OutgoingMessage(DateTime date, string number, string sender, string recipient, string adressee, int sourceId)
         {
             Number = number;
             Date = date;
             Sender = sender;
             Recipient = recipient;
             Adressee = adressee;
-            Source = source;
+            SourceId = sourceId;
         }
 
         public OutgoingMessage()
         {
+        }
+        public override string ToString()
+        {
+            return Date.ToString() + ", отправил:" + Sender + ", получил:" + Recipient;
         }
     }
 }

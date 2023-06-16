@@ -24,6 +24,7 @@ namespace AutoWorkplaceLib.Data
                 //.UseSqlite(connectionString)
                 .Options;
             optionsBuilder.LogTo(message => System.Diagnostics.Debug.WriteLine(message));
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
     }
 }

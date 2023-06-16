@@ -27,19 +27,22 @@ namespace AutoWorkplaceLib.Data
 
             foreach(string sourceName in sources)
             {
-                Source source = new Source(sourceName);
+                Source source = new Source()
+                {
+                    Name = sourceName,
+                };
                 db.Sources.Add(source);
             }
             db.SaveChanges();
-
-            for(int i = 0;i < inMessagesNumber;i++)
+            
+            for (int i = 0;i < inMessagesNumber;i++)
             {
-                DateTime date = DateTime.Now - new TimeSpan(random.NextInt64(365 * 2));
+                DateTime date = DateTime.Now - new TimeSpan((int)random.NextInt64(365 * 5), 0, 0, 0);
                 string sender = "Отправитель" + i.ToString();
                 string recipient = "Адресат" + i.ToString();
                 string adressee = "Адресант" + i.ToString();
-                Source source = db.Sources.ToArray()[random.NextInt64(db.Sources.Count())];
-                IncomingMessage inMessage = new IncomingMessage(date, sender, recipient, adressee, source);
+                int sourceId = db.Sources.ToArray()[random.NextInt64(db.Sources.Count())].Id;
+                IncomingMessage inMessage = new IncomingMessage(date, sender, recipient, adressee, sourceId);
                 db.IncomingMessages.Add(inMessage);
             }
             db.SaveChanges();
@@ -47,12 +50,12 @@ namespace AutoWorkplaceLib.Data
             for (int i = 0; i < outMessagesNumber; i++)
             {
                 string number = random.NextInt64(1, 100).ToString() + "-" + random.NextInt64(1, 100).ToString() + "-" + random.NextInt64(1, 100).ToString();
-                DateTime date = DateTime.Now - new TimeSpan(random.NextInt64(365 * 2));
+                DateTime date = DateTime.Now - new TimeSpan((int)random.NextInt64(365 * 5),0,0,0);
                 string sender = "Адресант" + i.ToString();
                 string recipient = "Получатель" + i.ToString();
                 string adressee = "Адресат" + i.ToString();
-                Source source = db.Sources.ToArray()[random.NextInt64(db.Sources.Count())];
-                OutgoingMessage outMessage = new OutgoingMessage(date, number, sender, recipient, adressee, source);
+                int sourceId = db.Sources.ToArray()[random.NextInt64(db.Sources.Count())].Id; ;
+                OutgoingMessage outMessage = new OutgoingMessage(date, number, sender, recipient, adressee, sourceId);
                 db.OutgoingMessages.Add(outMessage);
             }
             db.SaveChanges();
