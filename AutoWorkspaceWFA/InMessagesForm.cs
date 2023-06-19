@@ -16,16 +16,30 @@ namespace AutoWorkspaceWFA
     public partial class InMessagesForm : Form
     {
         private List<IncomingMessage> messages = new List<IncomingMessage>();
+        private readonly List<Source> sources = new List<Source>();
         readonly private InMessageRepository messageRepository;
         private readonly string text2 = "Отправитель";
-        private readonly string text3 = "Получатель";
+        private readonly string text3 = "Кому";
         private readonly string text4 = "От кого";
         public InMessagesForm()
         {
-            AutoWorkplaceContext db = new AutoWorkplaceContext();
             messageRepository = new InMessageRepository();
             InitializeComponent();
-            LoadMessages();
+            dataGridView.AllowUserToResizeColumns = false;
+            dataGridView.AllowUserToResizeRows = false;
+            dataGridView.AllowUserToAddRows = false;
+            dataGridView.AllowUserToDeleteRows = false;
+            dataGridView.AllowUserToOrderColumns = false;
+            dataGridView.AutoGenerateColumns = true;
+            dataGridView.ReadOnly = true;
+            makeHelpTextVisible(textBoxSender, text2);
+            makeHelpTextVisible(textBoxRecipient, text3);
+            makeHelpTextVisible(textBoxAdressee, text4);
+            SourcesRepository sourcesRepository = new SourcesRepository();
+            sources = sourcesRepository.AllItems.OrderBy(s => s.Id).ToList();
+            //sources = new List<Source>() { new Source(1, "Электронная почта"), new Source(2, "Бумажная почта"), new Source(3, "СМДО") };
+            comboBoxSource.Items.AddRange(sources.Select(s => s.Name).ToArray());
+            loadMessages();
         }
 
         private void DeleteButton_Click(object sender, EventArgs e)
@@ -33,11 +47,11 @@ namespace AutoWorkspaceWFA
             if (dataGridView.CurrentCell.RowIndex >= 0)
             {
                 messageRepository.Delete(messages[dataGridView.CurrentCell.RowIndex].Id);
-                LoadMessages();
+                loadMessages();
             }
-            LoadMessages();
+            loadMessages();
         }
-        private void LoadMessages()
+        private void loadMessages()
         {
             messages = messageRepository.SelectAll();
             DataTable dt = new DataTable();
@@ -75,6 +89,23 @@ namespace AutoWorkspaceWFA
             }
         }
 
+        private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView.CurrentCell.RowIndex >= 0 && dataGridView.CurrentCell.RowIndex < messages.Count)
+            {
+                makeHelpTextUnvisible(textBoxSender);
+                makeHelpTextUnvisible(textBoxRecipient);
+                makeHelpTextUnvisible(textBoxAdressee);
+                textBoxSender.Text = dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
+                textBoxRecipient.Text = dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString();
+                textBoxAdressee.Text = dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
+                comboBoxSource.SelectedIndex = sources
+                    .Where(s => s.Name.Equals(dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString()))
+                    .Select(s => s.Id)
+                    .FirstOrDefault() - 1;
+            }
+        }
+
         private void textBoxAdressee_Enter(object sender, EventArgs e)
         {
             makeHelpTextUnvisible(textBoxAdressee);
@@ -103,6 +134,32 @@ namespace AutoWorkspaceWFA
         private void textBoxSender_Enter(object sender, EventArgs e)
         {
             makeHelpTextUnvisible(textBoxSender);
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            messageRepository.Insert(new IncomingMessage(
+                0,
+                DateTime.Now,
+                textBoxSender.Text,
+                textBoxRecipient.Text,
+                textBoxAdressee.Text,
+                comboBoxSource.SelectedIndex + 1
+                ));
+            loadMessages();
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            messageRepository.Update(new IncomingMessage(
+                messages[dataGridView.CurrentCell.RowIndex].Id,
+                DateTime.Now,
+                textBoxSender.Text,
+                textBoxRecipient.Text,
+                textBoxAdressee.Text,
+                comboBoxSource.SelectedIndex + 1
+                ));
+            loadMessages();
         }
     }
 }

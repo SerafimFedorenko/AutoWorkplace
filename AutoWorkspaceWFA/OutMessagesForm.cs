@@ -17,15 +17,16 @@ namespace AutoWorkspaceWFA
     {
         private List<OutgoingMessage> messages = new List<OutgoingMessage>();
         readonly private OutMessageRepository messageRepository;
-        private readonly string text1 = "Номер";
-        private readonly string text2 = "Отправитель";
-        private readonly string text3 = "Получатель";
-        private readonly string text4 = "Кому";
+        private readonly string textNumber = "Номер";
+        private readonly string textSender = "Отправитель";
+        private readonly string textRecipient = "Получатель";
+        private readonly string textAdressee = "Кому";
         private readonly List<Source> sources = new List<Source>();
         public OutMessagesForm()
         {
-            messageRepository = new OutMessageRepository();
             InitializeComponent();
+            messageRepository = new OutMessageRepository();
+            messages = messageRepository.SelectAll();
             dataGridView.AllowUserToResizeColumns = false;
             dataGridView.AllowUserToResizeRows = false;
             dataGridView.AllowUserToAddRows = false;
@@ -33,29 +34,45 @@ namespace AutoWorkspaceWFA
             dataGridView.AllowUserToOrderColumns = false;
             dataGridView.AutoGenerateColumns = true;
             dataGridView.ReadOnly = true;
-            makeHelpTextVisible(textBoxNumber, text1);
-            makeHelpTextVisible(textBoxSender, text2);
-            makeHelpTextVisible(textBoxRecipient, text3);
-            makeHelpTextVisible(textBoxAdressee, text4);
-            //SourcesRepository sourcesRepository = new SourcesRepository();
-            //sources = sourcesRepository.AllItems.OrderBy(s => s.Id).ToList();
-            sources = new List<Source>() { new Source(1, "Электронная почта"), new Source(2, "Бумажная почта"), new Source(3, "СМДО") };
+            groupBox1.Text = null;
+
+            SourcesRepository sourcesRepository = new SourcesRepository();
+            sources = sourcesRepository.AllItems.OrderBy(s => s.Id).ToList();
+            //sources = new List<Source>() { new Source(1, "Электронная почта"), new Source(2, "Бумажная почта"), new Source(3, "СМДО") };
             comboBoxSource.Items.AddRange(sources.Select(s => s.Name).ToArray());
-            loadMessages();
+            loadMessages(messages);
+            dateTimePickerFrom.Value = messages.OrderBy(m => m.Date).FirstOrDefault().Date;
+            dateTimePickerTo.Value = messages.OrderByDescending(m => m.Date).FirstOrDefault().Date;
+            makeHelpTextVisible(textBoxNumber, textNumber);
+            makeHelpTextVisible(textBoxSender, textSender);
+            makeHelpTextVisible(textBoxRecipient, textRecipient);
+            makeHelpTextVisible(textBoxAdressee, textAdressee);
+            makeHelpTextVisible(textBoxSenderFilter, textSender);
+            makeHelpTextVisible(textBoxRecipientFilter, textRecipient);
+            makeHelpTextVisible(textBoxAdresseeFilter, textAdressee);
         }
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            if (dataGridView.CurrentCell.RowIndex >= 0 && dataGridView.CurrentCell.RowIndex < messages.Count)
+            try
             {
-                messageRepository.Delete(messages[dataGridView.CurrentCell.RowIndex].Id);
-                loadMessages();
+                if (dataGridView.CurrentCell.RowIndex >= 0 && dataGridView.CurrentCell.RowIndex < messages.Count)
+                {
+                    messageRepository.Delete(messages[dataGridView.CurrentCell.RowIndex].Id);
+                    //messages = messageRepository.SelectAll();
+                    //loadMessages(messages);
+                    loadFiltered();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
-        private void loadMessages()
+        private void loadMessages(List<OutgoingMessage> messages)
         {
-            messages = messageRepository.SelectAll();
+            this.messages = messages;
             DataTable dt = new DataTable();
             dt.Columns.Add("Дата");
             dt.Columns.Add("Номер");
@@ -79,8 +96,8 @@ namespace AutoWorkspaceWFA
         {
             if (textBox.Text.Length < 1)
             {
-                textBox.Text = text;
                 textBox.ForeColor = Color.Gray;
+                textBox.Text = text;
             }
         }
 
@@ -100,7 +117,7 @@ namespace AutoWorkspaceWFA
 
         private void textBoxAdressee_Leave(object sender, EventArgs e)
         {
-            makeHelpTextVisible(textBoxAdressee, text4);
+            makeHelpTextVisible(textBoxAdressee, textAdressee);
         }
 
         private void textBoxRecipient_Enter(object sender, EventArgs e)
@@ -110,12 +127,12 @@ namespace AutoWorkspaceWFA
 
         private void textBoxRecipient_Leave(object sender, EventArgs e)
         {
-            makeHelpTextVisible(textBoxRecipient, text3);
+            makeHelpTextVisible(textBoxRecipient, textRecipient);
         }
 
         private void textBoxSender_Leave(object sender, EventArgs e)
         {
-            makeHelpTextVisible(textBoxSender, text2);
+            makeHelpTextVisible(textBoxSender, textSender);
         }
 
         private void textBoxSender_Enter(object sender, EventArgs e)
@@ -130,26 +147,37 @@ namespace AutoWorkspaceWFA
 
         private void textBoxNumber_Leave(object sender, EventArgs e)
         {
-            makeHelpTextVisible(textBoxNumber, text1);
+            makeHelpTextVisible(textBoxNumber, textNumber);
         }
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            messageRepository.Insert(new OutgoingMessage(
-                0,
-                DateTime.Now,
-                textBoxNumber.Text,
-                textBoxSender.Text,
-                textBoxRecipient.Text,
-                textBoxAdressee.Text,
-                comboBoxSource.SelectedIndex + 1
-                ));
-            loadMessages();
+            try
+            {
+                messageRepository.Insert(new OutgoingMessage(
+                    0,
+                    DateTime.Now,
+                    textBoxNumber.Text,
+                    textBoxSender.Text,
+                    textBoxRecipient.Text,
+                    textBoxAdressee.Text,
+                    comboBoxSource.SelectedIndex + 1
+                    ));
+                //messages = messageRepository.SelectAll();
+                //loadMessages(messages);
+                loadFiltered();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            messageRepository.Update(new OutgoingMessage(
+            try
+            {
+                messageRepository.Update(new OutgoingMessage(
                 messages[dataGridView.CurrentCell.RowIndex].Id,
                 DateTime.Now,
                 textBoxNumber.Text,
@@ -158,10 +186,17 @@ namespace AutoWorkspaceWFA
                 textBoxAdressee.Text,
                 comboBoxSource.SelectedIndex + 1
                 ));
-            loadMessages();
+                //messages = messageRepository.SelectAll();
+                //loadMessages(messages);
+                loadFiltered();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView.CurrentCell.RowIndex >= 0 && dataGridView.CurrentCell.RowIndex < messages.Count)
             {
@@ -178,6 +213,115 @@ namespace AutoWorkspaceWFA
                     .Select(s => s.Id)
                     .FirstOrDefault() - 1;
             }
+        }
+
+        private void dateTimePickerFrom_ValueChanged(object sender, EventArgs e)
+        {
+            loadFiltered();
+        }
+
+        private void dateTimePickerFrom_DropDown(object sender, EventArgs e)
+        {
+            dateTimePickerFrom.ValueChanged -= dateTimePickerFrom_ValueChanged;
+        }
+
+        private void dateTimePickerFrom_CloseUp(object sender, EventArgs e)
+        {
+            dateTimePickerFrom.ValueChanged += dateTimePickerFrom_ValueChanged;
+            dateTimePickerFrom_ValueChanged(sender, e);
+        }
+
+        private void dateTimePickerTo_ValueChanged(object sender, EventArgs e)
+        {
+            loadFiltered();
+        }
+        private void dateTimePickerTo_DropDown(object sender, EventArgs e)
+        {
+            dateTimePickerTo.ValueChanged -= dateTimePickerTo_ValueChanged;
+        }
+
+        private void dateTimePickerTo_CloseUp(object sender, EventArgs e)
+        {
+            dateTimePickerTo.ValueChanged += dateTimePickerTo_ValueChanged;
+            dateTimePickerTo_ValueChanged(sender, e);
+        }
+
+        private void textBoxSenderFilter_TextChanged(object sender, EventArgs e)
+        {
+            loadFiltered();
+        }
+
+        private void textBoxRecipientFilter_TextChanged(object sender, EventArgs e)
+        {
+            loadFiltered();
+        }
+
+        private void textBoxAdresseeFilter_TextChanged(object sender, EventArgs e)
+        {
+            loadFiltered();
+        }
+
+        private void textBoxSenderFilter_Enter(object sender, EventArgs e)
+        {
+            makeHelpTextUnvisible(textBoxSenderFilter);
+        }
+
+        private void textBoxSenderFilter_Leave(object sender, EventArgs e)
+        {
+            makeHelpTextVisible(textBoxSenderFilter, textSender);
+        }
+
+        private void textBoxRecipientFilter_Enter(object sender, EventArgs e)
+        {
+            makeHelpTextUnvisible(textBoxRecipientFilter);
+        }
+
+        private void textBoxRecipientFilter_Leave(object sender, EventArgs e)
+        {
+            makeHelpTextVisible(textBoxRecipientFilter, textRecipient);
+        }
+
+        private void textBoxAdresseeFilter_Enter(object sender, EventArgs e)
+        {
+            makeHelpTextUnvisible(textBoxAdresseeFilter);
+        }
+
+        private void textBoxAdresseeFilter_Leave(object sender, EventArgs e)
+        {
+            makeHelpTextVisible(textBoxAdresseeFilter, textAdressee);
+        }
+        private void loadFiltered()
+        {
+            var messages = messageRepository.SelectAll()
+                .Where(m => m.Date > dateTimePickerFrom.Value && m.Date < dateTimePickerTo.Value);
+            if (textBoxSenderFilter.Text.Length > 0 && textBoxSenderFilter.ForeColor == Color.Black)
+            {
+                messages = messages.Where(m => m.Sender.Contains(textBoxSenderFilter.Text));
+            }
+            if (textBoxRecipientFilter.Text.Length > 0 && textBoxRecipientFilter.ForeColor == Color.Black)
+            {
+                messages = messages.Where(m => m.Sender.Contains(textBoxRecipientFilter.Text));
+            }
+            if (textBoxAdresseeFilter.Text.Length > 0 && textBoxAdresseeFilter.ForeColor == Color.Black)
+            {
+                messages = messages.Where(m => m.Adressee.Contains(textBoxAdresseeFilter.Text));
+            }
+            this.messages = messages.ToList();
+            loadMessages(this.messages);
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            messages = messageRepository.SelectAll().ToList();
+            dateTimePickerFrom.Value = messages.OrderBy(m => m.Date).FirstOrDefault().Date;
+            dateTimePickerTo.Value = messages.OrderByDescending(m => m.Date).FirstOrDefault().Date;
+            textBoxSenderFilter.Text = null;
+            textBoxRecipientFilter.Text = null;
+            textBoxAdresseeFilter.Text = null;
+            makeHelpTextVisible(textBoxSenderFilter, textSender);
+            makeHelpTextVisible(textBoxRecipientFilter, textRecipient);
+            makeHelpTextVisible(textBoxAdresseeFilter, textAdressee);
+            loadMessages(messages);
         }
     }
 }

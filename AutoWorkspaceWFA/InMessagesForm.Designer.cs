@@ -31,8 +31,8 @@
             DeleteButton = new Button();
             dataGridView = new DataGridView();
             groupBox1 = new GroupBox();
-            button2 = new Button();
-            button1 = new Button();
+            saveButton = new Button();
+            addButton = new Button();
             comboBoxSource = new ComboBox();
             textBoxRecipient = new TextBox();
             textBoxAdressee = new TextBox();
@@ -59,11 +59,12 @@
             dataGridView.RowTemplate.Height = 25;
             dataGridView.Size = new Size(771, 386);
             dataGridView.TabIndex = 3;
+            dataGridView.CellClick += dataGridView_CellClick;
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(button2);
-            groupBox1.Controls.Add(button1);
+            groupBox1.Controls.Add(saveButton);
+            groupBox1.Controls.Add(addButton);
             groupBox1.Controls.Add(comboBoxSource);
             groupBox1.Controls.Add(textBoxRecipient);
             groupBox1.Controls.Add(textBoxAdressee);
@@ -75,23 +76,25 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "groupBox1";
             // 
-            // button2
+            // saveButton
             // 
-            button2.Location = new Point(108, 138);
-            button2.Name = "button2";
-            button2.Size = new Size(83, 23);
-            button2.TabIndex = 5;
-            button2.Text = "Сохранить";
-            button2.UseVisualStyleBackColor = true;
+            saveButton.Location = new Point(108, 138);
+            saveButton.Name = "saveButton";
+            saveButton.Size = new Size(83, 23);
+            saveButton.TabIndex = 5;
+            saveButton.Text = "Сохранить";
+            saveButton.UseVisualStyleBackColor = true;
+            saveButton.Click += saveButton_Click;
             // 
-            // button1
+            // addButton
             // 
-            button1.Location = new Point(6, 138);
-            button1.Name = "button1";
-            button1.Size = new Size(83, 23);
-            button1.TabIndex = 4;
-            button1.Text = "Добавить";
-            button1.UseVisualStyleBackColor = true;
+            addButton.Location = new Point(6, 138);
+            addButton.Name = "addButton";
+            addButton.Size = new Size(83, 23);
+            addButton.TabIndex = 4;
+            addButton.Text = "Добавить";
+            addButton.UseVisualStyleBackColor = true;
+            addButton.Click += addButton_Click;
             // 
             // comboBoxSource
             // 
@@ -107,6 +110,8 @@
             textBoxRecipient.Name = "textBoxRecipient";
             textBoxRecipient.Size = new Size(185, 23);
             textBoxRecipient.TabIndex = 2;
+            textBoxRecipient.Enter += textBoxRecipient_Enter;
+            textBoxRecipient.Leave += textBoxRecipient_Leave;
             // 
             // textBoxAdressee
             // 
@@ -114,6 +119,8 @@
             textBoxAdressee.Name = "textBoxAdressee";
             textBoxAdressee.Size = new Size(185, 23);
             textBoxAdressee.TabIndex = 1;
+            textBoxAdressee.Enter += textBoxAdressee_Enter;
+            textBoxAdressee.Leave += textBoxAdressee_Leave;
             // 
             // textBoxSender
             // 
@@ -121,6 +128,8 @@
             textBoxSender.Name = "textBoxSender";
             textBoxSender.Size = new Size(185, 23);
             textBoxSender.TabIndex = 0;
+            textBoxSender.Enter += textBoxSender_Enter;
+            textBoxSender.Leave += textBoxSender_Leave;
             // 
             // InMessagesForm
             // 
@@ -131,7 +140,7 @@
             Controls.Add(dataGridView);
             Controls.Add(DeleteButton);
             Name = "InMessagesForm";
-            Text = "InMessagesForm";
+            Text = "Входящие письма";
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -146,7 +155,7 @@
         private TextBox textBoxRecipient;
         private TextBox textBoxAdressee;
         private TextBox textBoxSender;
-        private Button button2;
-        private Button button1;
+        private Button saveButton;
+        private Button addButton;
     }
 }
