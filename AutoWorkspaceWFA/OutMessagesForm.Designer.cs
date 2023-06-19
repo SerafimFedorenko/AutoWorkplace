@@ -41,6 +41,7 @@ namespace AutoWorkspaceWFA
             groupBox1 = new GroupBox();
             saveButton = new Button();
             groupBox2 = new GroupBox();
+            resetButton = new Button();
             textBoxAdresseeFilter = new TextBox();
             dateTimePickerFrom = new DateTimePicker();
             textBoxRecipientFilter = new TextBox();
@@ -48,7 +49,6 @@ namespace AutoWorkspaceWFA
             textBoxSenderFilter = new TextBox();
             dateTimePickerTo = new DateTimePicker();
             label2 = new Label();
-            resetButton = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -76,7 +76,7 @@ namespace AutoWorkspaceWFA
             // 
             // textBoxNumber
             // 
-            textBoxNumber.Location = new Point(6, 12);
+            textBoxNumber.Location = new Point(6, 22);
             textBoxNumber.Name = "textBoxNumber";
             textBoxNumber.Size = new Size(192, 23);
             textBoxNumber.TabIndex = 7;
@@ -85,7 +85,7 @@ namespace AutoWorkspaceWFA
             // 
             // textBoxSender
             // 
-            textBoxSender.Location = new Point(6, 41);
+            textBoxSender.Location = new Point(6, 51);
             textBoxSender.Name = "textBoxSender";
             textBoxSender.Size = new Size(192, 23);
             textBoxSender.TabIndex = 8;
@@ -94,7 +94,7 @@ namespace AutoWorkspaceWFA
             // 
             // textBoxRecipient
             // 
-            textBoxRecipient.Location = new Point(6, 70);
+            textBoxRecipient.Location = new Point(6, 80);
             textBoxRecipient.Name = "textBoxRecipient";
             textBoxRecipient.Size = new Size(192, 23);
             textBoxRecipient.TabIndex = 9;
@@ -104,7 +104,7 @@ namespace AutoWorkspaceWFA
             // textBoxAdressee
             // 
             textBoxAdressee.ForeColor = Color.Gray;
-            textBoxAdressee.Location = new Point(6, 99);
+            textBoxAdressee.Location = new Point(6, 109);
             textBoxAdressee.Name = "textBoxAdressee";
             textBoxAdressee.Size = new Size(192, 23);
             textBoxAdressee.TabIndex = 10;
@@ -114,14 +114,14 @@ namespace AutoWorkspaceWFA
             // comboBoxSource
             // 
             comboBoxSource.FormattingEnabled = true;
-            comboBoxSource.Location = new Point(6, 128);
+            comboBoxSource.Location = new Point(6, 138);
             comboBoxSource.Name = "comboBoxSource";
             comboBoxSource.Size = new Size(192, 23);
             comboBoxSource.TabIndex = 11;
             // 
             // addButton
             // 
-            addButton.Location = new Point(6, 157);
+            addButton.Location = new Point(6, 167);
             addButton.Name = "addButton";
             addButton.Size = new Size(90, 23);
             addButton.TabIndex = 12;
@@ -140,14 +140,14 @@ namespace AutoWorkspaceWFA
             groupBox1.Controls.Add(textBoxAdressee);
             groupBox1.Location = new Point(854, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(208, 184);
+            groupBox1.Size = new Size(208, 192);
             groupBox1.TabIndex = 13;
             groupBox1.TabStop = false;
-            groupBox1.Text = "groupBox1";
+            groupBox1.Text = "Добавление и изменение";
             // 
             // saveButton
             // 
-            saveButton.Location = new Point(108, 157);
+            saveButton.Location = new Point(108, 167);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(90, 23);
             saveButton.TabIndex = 13;
@@ -165,16 +165,26 @@ namespace AutoWorkspaceWFA
             groupBox2.Controls.Add(textBoxSenderFilter);
             groupBox2.Controls.Add(dateTimePickerTo);
             groupBox2.Controls.Add(label2);
-            groupBox2.Location = new Point(854, 202);
+            groupBox2.Location = new Point(854, 210);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(208, 236);
+            groupBox2.Size = new Size(208, 230);
             groupBox2.TabIndex = 14;
             groupBox2.TabStop = false;
             groupBox2.Text = "Фильтры";
             // 
+            // resetButton
+            // 
+            resetButton.Location = new Point(6, 201);
+            resetButton.Name = "resetButton";
+            resetButton.Size = new Size(190, 23);
+            resetButton.TabIndex = 29;
+            resetButton.Text = "Сбросить фильтры";
+            resetButton.UseVisualStyleBackColor = true;
+            resetButton.Click += resetButton_Click;
+            // 
             // textBoxAdresseeFilter
             // 
-            textBoxAdresseeFilter.Location = new Point(8, 179);
+            textBoxAdresseeFilter.Location = new Point(6, 173);
             textBoxAdresseeFilter.Name = "textBoxAdresseeFilter";
             textBoxAdresseeFilter.Size = new Size(190, 23);
             textBoxAdresseeFilter.TabIndex = 28;
@@ -184,7 +194,7 @@ namespace AutoWorkspaceWFA
             // 
             // dateTimePickerFrom
             // 
-            dateTimePickerFrom.Location = new Point(8, 36);
+            dateTimePickerFrom.Location = new Point(6, 34);
             dateTimePickerFrom.Name = "dateTimePickerFrom";
             dateTimePickerFrom.Size = new Size(190, 23);
             dateTimePickerFrom.TabIndex = 22;
@@ -194,7 +204,7 @@ namespace AutoWorkspaceWFA
             // 
             // textBoxRecipientFilter
             // 
-            textBoxRecipientFilter.Location = new Point(8, 150);
+            textBoxRecipientFilter.Location = new Point(6, 144);
             textBoxRecipientFilter.Name = "textBoxRecipientFilter";
             textBoxRecipientFilter.Size = new Size(190, 23);
             textBoxRecipientFilter.TabIndex = 27;
@@ -205,7 +215,7 @@ namespace AutoWorkspaceWFA
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(8, 18);
+            label1.Location = new Point(4, 16);
             label1.Name = "label1";
             label1.Size = new Size(15, 15);
             label1.TabIndex = 23;
@@ -213,7 +223,7 @@ namespace AutoWorkspaceWFA
             // 
             // textBoxSenderFilter
             // 
-            textBoxSenderFilter.Location = new Point(8, 121);
+            textBoxSenderFilter.Location = new Point(6, 115);
             textBoxSenderFilter.Name = "textBoxSenderFilter";
             textBoxSenderFilter.Size = new Size(190, 23);
             textBoxSenderFilter.TabIndex = 26;
@@ -223,7 +233,7 @@ namespace AutoWorkspaceWFA
             // 
             // dateTimePickerTo
             // 
-            dateTimePickerTo.Location = new Point(8, 84);
+            dateTimePickerTo.Location = new Point(6, 78);
             dateTimePickerTo.Name = "dateTimePickerTo";
             dateTimePickerTo.Size = new Size(190, 23);
             dateTimePickerTo.TabIndex = 24;
@@ -234,21 +244,11 @@ namespace AutoWorkspaceWFA
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(8, 66);
+            label2.Location = new Point(6, 60);
             label2.Name = "label2";
             label2.Size = new Size(23, 15);
             label2.TabIndex = 25;
             label2.Text = "По";
-            // 
-            // resetButton
-            // 
-            resetButton.Location = new Point(8, 207);
-            resetButton.Name = "resetButton";
-            resetButton.Size = new Size(190, 23);
-            resetButton.TabIndex = 29;
-            resetButton.Text = "Сбросить фильтры";
-            resetButton.UseVisualStyleBackColor = true;
-            resetButton.Click += resetButton_Click;
             // 
             // OutMessagesForm
             // 
@@ -260,7 +260,7 @@ namespace AutoWorkspaceWFA
             Controls.Add(dataGridView);
             Controls.Add(DeleteButton);
             Name = "OutMessagesForm";
-            Text = "OutMessagesForm";
+            Text = "Исходящие письма";
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

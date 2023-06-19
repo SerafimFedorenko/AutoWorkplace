@@ -37,8 +37,18 @@
             textBoxRecipient = new TextBox();
             textBoxAdressee = new TextBox();
             textBoxSender = new TextBox();
+            groupBox2 = new GroupBox();
+            resetButton = new Button();
+            textBoxAdresseeFilter = new TextBox();
+            dateTimePickerFrom = new DateTimePicker();
+            textBoxRecipientFilter = new TextBox();
+            label1 = new Label();
+            textBoxSenderFilter = new TextBox();
+            dateTimePickerTo = new DateTimePicker();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // DeleteButton
@@ -71,10 +81,10 @@
             groupBox1.Controls.Add(textBoxSender);
             groupBox1.Location = new Point(789, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(202, 220);
+            groupBox1.Size = new Size(202, 176);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
-            groupBox1.Text = "groupBox1";
+            groupBox1.Text = "Добавление и изменение";
             // 
             // saveButton
             // 
@@ -131,11 +141,103 @@
             textBoxSender.Enter += textBoxSender_Enter;
             textBoxSender.Leave += textBoxSender_Leave;
             // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(resetButton);
+            groupBox2.Controls.Add(textBoxAdresseeFilter);
+            groupBox2.Controls.Add(dateTimePickerFrom);
+            groupBox2.Controls.Add(textBoxRecipientFilter);
+            groupBox2.Controls.Add(label1);
+            groupBox2.Controls.Add(textBoxSenderFilter);
+            groupBox2.Controls.Add(dateTimePickerTo);
+            groupBox2.Controls.Add(label2);
+            groupBox2.Location = new Point(789, 202);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(202, 236);
+            groupBox2.TabIndex = 15;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Фильтры";
+            // 
+            // resetButton
+            // 
+            resetButton.Location = new Point(8, 207);
+            resetButton.Name = "resetButton";
+            resetButton.Size = new Size(183, 23);
+            resetButton.TabIndex = 29;
+            resetButton.Text = "Сбросить фильтры";
+            resetButton.UseVisualStyleBackColor = true;
+            resetButton.Click += resetButton_Click;
+            // 
+            // textBoxAdresseeFilter
+            // 
+            textBoxAdresseeFilter.Location = new Point(8, 179);
+            textBoxAdresseeFilter.Name = "textBoxAdresseeFilter";
+            textBoxAdresseeFilter.Size = new Size(183, 23);
+            textBoxAdresseeFilter.TabIndex = 28;
+            textBoxAdresseeFilter.TextChanged += textBoxAdresseeFilter_TextChanged;
+            textBoxAdresseeFilter.Enter += textBoxAdresseeFilter_Enter;
+            textBoxAdresseeFilter.Leave += textBoxAdresseeFilter_Leave;
+            // 
+            // dateTimePickerFrom
+            // 
+            dateTimePickerFrom.Location = new Point(8, 36);
+            dateTimePickerFrom.Name = "dateTimePickerFrom";
+            dateTimePickerFrom.Size = new Size(183, 23);
+            dateTimePickerFrom.TabIndex = 22;
+            dateTimePickerFrom.ValueChanged += dateTimePickerFrom_ValueChanged;
+            // 
+            // textBoxRecipientFilter
+            // 
+            textBoxRecipientFilter.Location = new Point(8, 150);
+            textBoxRecipientFilter.Name = "textBoxRecipientFilter";
+            textBoxRecipientFilter.Size = new Size(183, 23);
+            textBoxRecipientFilter.TabIndex = 27;
+            textBoxRecipientFilter.TextChanged += textBoxRecipientFilter_TextChanged;
+            textBoxRecipientFilter.Enter += textBoxRecipientFilter_Enter;
+            textBoxRecipientFilter.Leave += textBoxRecipientFilter_Leave;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(8, 18);
+            label1.Name = "label1";
+            label1.Size = new Size(15, 15);
+            label1.TabIndex = 23;
+            label1.Text = "С";
+            // 
+            // textBoxSenderFilter
+            // 
+            textBoxSenderFilter.Location = new Point(8, 121);
+            textBoxSenderFilter.Name = "textBoxSenderFilter";
+            textBoxSenderFilter.Size = new Size(183, 23);
+            textBoxSenderFilter.TabIndex = 26;
+            textBoxSenderFilter.TextChanged += textBoxSenderFilter_TextChanged;
+            textBoxSenderFilter.Enter += textBoxSenderFilter_Enter;
+            textBoxSenderFilter.Leave += textBoxSenderFilter_Leave;
+            // 
+            // dateTimePickerTo
+            // 
+            dateTimePickerTo.Location = new Point(8, 84);
+            dateTimePickerTo.Name = "dateTimePickerTo";
+            dateTimePickerTo.Size = new Size(183, 23);
+            dateTimePickerTo.TabIndex = 24;
+            dateTimePickerTo.ValueChanged += dateTimePickerTo_ValueChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(8, 66);
+            label2.Name = "label2";
+            label2.Size = new Size(23, 15);
+            label2.TabIndex = 25;
+            label2.Text = "По";
+            // 
             // InMessagesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1003, 450);
+            Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(dataGridView);
             Controls.Add(DeleteButton);
@@ -144,6 +246,8 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -157,5 +261,14 @@
         private TextBox textBoxSender;
         private Button saveButton;
         private Button addButton;
+        private GroupBox groupBox2;
+        private Button resetButton;
+        private TextBox textBoxAdresseeFilter;
+        private DateTimePicker dateTimePickerFrom;
+        private TextBox textBoxRecipientFilter;
+        private Label label1;
+        private TextBox textBoxSenderFilter;
+        private DateTimePicker dateTimePickerTo;
+        private Label label2;
     }
 }
