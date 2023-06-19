@@ -7,31 +7,31 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 namespace Persistence.Repositories.Base;
 public class BaseRepository<T> : IRepository<T> where T : BaseEntity, new()
 {
-    private readonly AutoWorkplaceContext _context;
-    private readonly DbSet<T> _set;
+    protected readonly AutoWorkplaceContext _context;
+    protected readonly DbSet<T> _set;
 
-    protected BaseRepository(AutoWorkplaceContext context)
+    protected BaseRepository()
     {
-        _context = context;
+        _context =  new AutoWorkplaceContext();
+
         _set = _context.Set<T>();
     }
 
     public virtual IQueryable<T> AllItems => _set;
     public virtual IQueryable<T> ItemsForDetails => _set;
 
-    public void Delete(int id)
+    public virtual void Delete(int id)
     {
         _context.Remove(new T { Id = id });
         _context.SaveChanges();
     }
 
-    public int Insert(T entity)
+    public virtual int Insert(T entity)
     {
         ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 
         _context.Entry(entity).State = EntityState.Added;
         _context.SaveChanges();
-
         return entity.Id;
     }
 
@@ -44,7 +44,7 @@ public class BaseRepository<T> : IRepository<T> where T : BaseEntity, new()
         return entity;
     }
 
-    public void Update(T entity)
+    public virtual void Update(T entity)
     {
         ArgumentNullException.ThrowIfNull(entity, nameof(entity));
 

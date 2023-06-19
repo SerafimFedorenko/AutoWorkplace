@@ -20,11 +20,12 @@ namespace AutoWorkplaceLib.Data
             //string connectionString = config.GetConnectionString("SqliteConnection");
             string connectionString = config.GetConnectionString("SQLConnection");
             _ = optionsBuilder
+                //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .EnableSensitiveDataLogging()
                 .UseSqlServer(connectionString)
                 //.UseSqlite(connectionString)
                 .Options;
             optionsBuilder.LogTo(message => System.Diagnostics.Debug.WriteLine(message));
-            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
     }
 }

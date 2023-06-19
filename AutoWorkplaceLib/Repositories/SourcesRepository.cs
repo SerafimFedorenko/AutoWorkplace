@@ -11,8 +11,20 @@ namespace AutoWorkplaceLib.Repositories
 {
     public class SourcesRepository : BaseRepository<Source>
     {
-        public SourcesRepository(AutoWorkplaceContext context) : base(context)
+        public SourcesRepository() : base()
         {
+        }
+        public override void Delete(int id)
+        {
+            base.Delete(id);
+        }
+        public override int Insert(Source entity)
+        {
+            return base.Insert(entity);
+        }
+        public override void Update(Source entity)
+        {
+            base.Update(entity);
         }
     }
 }

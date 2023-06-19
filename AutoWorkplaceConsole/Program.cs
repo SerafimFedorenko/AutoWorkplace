@@ -1,5 +1,3 @@
 ﻿using AutoWorkplaceLib.Data;
-
-AutoWorkplaceContext context = new AutoWorkplaceContext();
-DbInitializer.Initialize(context);
+DbInitializer.Initialize();
 Console.WriteLine("База данных успешно создана");

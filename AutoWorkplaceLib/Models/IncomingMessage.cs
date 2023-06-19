@@ -31,6 +31,15 @@ namespace AutoWorkplaceLib.Models
             SourceId = sourceId;
             Adressee = adressee;
         }
+        public IncomingMessage(int id, DateTime date, string sender, string recipient, string adressee, int sourceId)
+        {
+            Id = id;
+            Date = date;
+            Sender = sender;
+            Recipient = recipient;
+            SourceId = sourceId;
+            Adressee = adressee;
+        }
 
         public override string? ToString()
         {

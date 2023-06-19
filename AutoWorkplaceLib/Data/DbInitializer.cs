@@ -9,8 +9,9 @@ namespace AutoWorkplaceLib.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(AutoWorkplaceContext db)
+        public static void Initialize()
         {
+            AutoWorkplaceContext db = new AutoWorkplaceContext();
             db.Database.EnsureCreated();
 
             if(db.IncomingMessages.Any())
@@ -20,8 +21,8 @@ namespace AutoWorkplaceLib.Data
 
             Random random = new Random();
 
-            int inMessagesNumber = 100;
-            int outMessagesNumber = 100;
+            int inMessagesNumber = 50;
+            int outMessagesNumber = 50;
 
             string[] sources = { "Электронная почта", "Бумажная почта", "СМДО" };
 

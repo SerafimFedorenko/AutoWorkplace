@@ -7,7 +7,7 @@ namespace AutoWorkspaceWFA
         public MainForm()
         {
             AutoWorkplaceContext context = new AutoWorkplaceContext();
-            DbInitializer.Initialize(context);
+            DbInitializer.Initialize();
             InitializeComponent();
         }
 

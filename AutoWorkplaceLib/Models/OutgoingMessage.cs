@@ -33,7 +33,16 @@ namespace AutoWorkplaceLib.Models
             Adressee = adressee;
             SourceId = sourceId;
         }
-
+        public OutgoingMessage(int id, DateTime date, string number, string sender, string recipient, string adressee, int sourceId)
+        {
+            Id = id;
+            Number = number;
+            Date = date;
+            Sender = sender;
+            Recipient = recipient;
+            Adressee = adressee;
+            SourceId = sourceId;
+        }
         public OutgoingMessage()
         {
         }
