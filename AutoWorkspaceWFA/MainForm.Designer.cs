@@ -60,7 +60,7 @@
             Controls.Add(button2);
             Controls.Add(button1);
             Name = "MainForm";
-            Text = "Form1";
+            Text = "Главная";
             ResumeLayout(false);
         }
 

@@ -39,9 +39,9 @@ namespace AutoWorkplaceLib.Data
             for (int i = 0;i < inMessagesNumber;i++)
             {
                 DateTime date = DateTime.Now - new TimeSpan((int)random.NextInt64(365 * 5), 0, 0, 0);
-                string sender = "Отправитель" + i.ToString();
-                string recipient = "Адресат" + i.ToString();
-                string adressee = "Адресант" + i.ToString();
+                string sender = "От кого" + i.ToString();
+                string recipient = "Получатель" + i.ToString();
+                string adressee = "Кому" + i.ToString();
                 int sourceId = db.Sources.ToArray()[random.NextInt64(db.Sources.Count())].Id;
                 IncomingMessage inMessage = new IncomingMessage(date, sender, recipient, adressee, sourceId);
                 db.IncomingMessages.Add(inMessage);
@@ -52,9 +52,9 @@ namespace AutoWorkplaceLib.Data
             {
                 string number = random.NextInt64(1, 100).ToString() + "-" + random.NextInt64(1, 100).ToString() + "-" + random.NextInt64(1, 100).ToString();
                 DateTime date = DateTime.Now - new TimeSpan((int)random.NextInt64(365 * 5),0,0,0);
-                string sender = "Адресант" + i.ToString();
+                string sender = "От кого" + i.ToString();
                 string recipient = "Получатель" + i.ToString();
-                string adressee = "Адресат" + i.ToString();
+                string adressee = "Кому" + i.ToString();
                 int sourceId = db.Sources.ToArray()[random.NextInt64(db.Sources.Count())].Id; ;
                 OutgoingMessage outMessage = new OutgoingMessage(date, number, sender, recipient, adressee, sourceId);
                 db.OutgoingMessages.Add(outMessage);

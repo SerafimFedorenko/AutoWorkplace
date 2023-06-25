@@ -34,7 +34,6 @@ namespace AutoWorkspaceWFA
             dataGridView.AllowUserToOrderColumns = false;
             dataGridView.AutoGenerateColumns = true;
             dataGridView.ReadOnly = true;
-            groupBox1.Text = null;
 
             SourcesRepository sourcesRepository = new SourcesRepository();
             sources = sourcesRepository.AllItems.OrderBy(s => s.Id).ToList();

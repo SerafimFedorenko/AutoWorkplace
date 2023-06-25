@@ -17,13 +17,13 @@ namespace AutoWorkplaceLib.Data
             builder.SetBasePath(Directory.GetCurrentDirectory());
             builder.AddJsonFile("appsettings.json");
             IConfigurationRoot config = builder.Build();
-            //string connectionString = config.GetConnectionString("SqliteConnection");
-            string connectionString = config.GetConnectionString("SQLConnection");
+            string connectionString = config.GetConnectionString("SqliteConnection");
+            //string connectionString = config.GetConnectionString("SQLConnection");
             _ = optionsBuilder
                 //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .EnableSensitiveDataLogging()
-                .UseSqlServer(connectionString)
-                //.UseSqlite(connectionString)
+                //.UseSqlServer(connectionString)
+                .UseSqlite(connectionString)
                 .Options;
             optionsBuilder.LogTo(message => System.Diagnostics.Debug.WriteLine(message));
         }
